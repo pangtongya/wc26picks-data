@@ -58,11 +58,11 @@ def main():
     with open("matches.json", "w", encoding="utf-8") as f:
         json.dump(latest_data, f, ensure_ascii=False, indent=2)
     
-    print(f"✅ 数据已更新！比赛场数: {len(new_games)}")
+    print(f"✅ 数据已更新！比赛场数: {len(latest_data['games'])}")
     
     # 5. 显示变化（用于调试）
-    if len(new_games) > 0:
-        first_match = new_games[0]
+    if len(latest_data["games"]) > 0:
+        first_match = latest_data["games"][0]
         print(f"   第一场比赛: {first_match.get('home_team_name_en')} vs {first_match.get('away_team_name_en')}")
         print(f"   状态: {first_match.get('finished')} ({first_match.get('time_elapsed')})")
         print(f"   比分: {first_match.get('home_score')} - {first_match.get('away_score')}")
