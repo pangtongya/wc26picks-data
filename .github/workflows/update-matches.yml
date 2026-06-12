@@ -2,8 +2,8 @@ name: Update World Cup Matches Data
 
 on:
   schedule:
-    # 每 5 分钟运行一次（UTC 时间）
-    - cron: '*/5 * * * *'
+    # 每 30 分钟运行一次（UTC 时间）- 降低频率避免被限制
+    - cron: '*/30 * * * *'
   workflow_dispatch:  # 允许手动触发
   push:
     branches: [ main ]
