@@ -46,16 +46,13 @@ def main():
     except FileNotFoundError:
         old_data = {"games": []}
     
-    # 3. 检查是否有更新
-    old_games = old_data.get("games", [])
-    new_games = latest_data.get("games", [])
+    # 3. 检查是否有更新（对比整个 JSON 字符串）
+    old_str = json.dumps(old_data, sort_keys=True, ensure_ascii=False)
+    new_str = json.dumps(latest_data, sort_keys=True, ensure_ascii=False)
     
-    if len(old_games) == len(new_games):
-        # 简单检查：对比第一场比赛的 finished 状态
-        if len(old_games) > 0 and len(new_games) > 0:
-            if old_games[0].get("finished") == new_games[0].get("finished"):
-                print("✅ 数据无变化，无需更新")
-                sys.exit(0)
+    if old_str == new_str:
+        print("✅ 数据无变化，无需更新")
+        sys.exit(0)
     
     # 4. 保存新数据
     with open("matches.json", "w", encoding="utf-8") as f:
