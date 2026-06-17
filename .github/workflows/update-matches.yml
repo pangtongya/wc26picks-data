@@ -1,5 +1,10 @@
 name: Update World Cup Matches Data
 
+# 并发控制：取消正在运行的同名 workflow
+concurrency:
+  group: update-matches
+  cancel-in-progress: true
+
 on:
   schedule:
     # 每 6 小时运行一次（UTC 时间）- 降低频率避免被限制
@@ -33,6 +38,9 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
+        
+        # 先拉取最新代码，避免冲突
+        git pull --rebase origin main
         
         # 检查是否有更改
         if [[ -n $(git status -s matches.json) ]]; then
